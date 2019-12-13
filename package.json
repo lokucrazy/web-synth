@@ -1,0 +1,19 @@
+{
+  "name": "web-synth",
+  "version": "0.0.0",
+  "description": "a web synthesizer built from the web audio api",
+  "main": "synth.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lokucrazy/web-synth.git"
+  },
+  "author": "Ryan Lokugamage",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lokucrazy/web-synth/issues"
+  },
+  "homepage": "https://github.com/lokucrazy/web-synth#readme",
+  "devDependencies": {}
+}
