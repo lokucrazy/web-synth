@@ -6,12 +6,8 @@ let oscNum = {
 }
 
 function OscModule(ctx, amount, types) {
-    if (ctx === undefined || amount === undefined || types === undefined) {
-        return
-    }
-    if (types.length === 0 || !(types instanceof Array)) {
-        return
-    }
+    if (ctx === undefined || amount === undefined || types === undefined) return
+    if (types.length === 0 || !(types instanceof Array)) return
     this.id = oscNum.toString()
     this.ctx = ctx
     this.amount = amount
@@ -63,7 +59,7 @@ function OscModule(ctx, amount, types) {
         moduleInterface.appendChild(document.createElement('br'))
         this.oscs.map((osc, index) => {
             const oscInterface = document.createElement('div')
-            oscInterface.setAttribute('class','osc-interface')
+            oscInterface.setAttribute('class','param-interface')
             const slider = document.createElement('input')
             slider.setAttribute('class', 'vertical-slider')
             slider.setAttribute('type', 'range')
@@ -77,12 +73,12 @@ function OscModule(ctx, amount, types) {
                 }
             })
             const dropDown = document.createElement('select')
-            dropDown.addEventListener('change', event => {
+            dropDown.addEventListener('change', (event) => {
                 if (event && event.target && event.target.value) {
                     this.setType(index, event.target.value)
                 }
             })
-            this.defaultTypes.forEach(type => {
+            this.defaultTypes.forEach((type) => {
                 const option = document.createElement('option')
                 option.setAttribute('value', type)
                 option.innerText = type
