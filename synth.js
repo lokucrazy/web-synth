@@ -1,13 +1,14 @@
-import OscModule from "./OscModule.js";
-import FilterModule from "./FilterModule.js";
+import FilterModule from "./modules/FilterModule.js";
+import OscModule from "./modules/OscModule.js";
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioCtx = new AudioContext()
 
-const oscModule = new OscModule(audioCtx, 1, ['square'])
+const oscModule = new OscModule(audioCtx, 2, ['square'])
 const filterModule = new FilterModule(audioCtx, 'lowpass')
 export function playOscModule() {
     oscModule.connect(0).to(filterModule.filter)
+    oscModule.connect(1).to(filterModule.filter)
     filterModule.connect().to(audioCtx.destination)
     oscModule.start()
 }

@@ -60,11 +60,11 @@ function FilterModule(ctx, type) {
         const moduleHeader = document.createElement('h3')
         moduleHeader.innerText = 'Filter Module'
         moduleInterface.appendChild(moduleHeader)
-        moduleInterface.appendChild(document.createElement('br'))
         const filterInterface = document.createElement('div')
         filterInterface.setAttribute('class','param-interface')
         const freqSlider = document.createElement('input')
         freqSlider.setAttribute('class', 'vertical-slider')
+        freqSlider.setAttribute('orient', 'vertical')
         freqSlider.setAttribute('type', 'range')
         freqSlider.setAttribute('min', '16.35')
         freqSlider.setAttribute('max', '3951.07')
@@ -75,31 +75,55 @@ function FilterModule(ctx, type) {
                 this.setFrequency(event.target.value)
             }
         })
+        const freqDiv = document.createElement('div')
+        freqDiv.setAttribute('class', 'slider-container')
+        const freqLabel = document.createElement('label')
+        freqLabel.setAttribute('class', 'slider-label')
+        freqLabel.innerText = 'Freq'
+        freqDiv.appendChild(freqSlider)
+        freqDiv.appendChild(freqLabel)
         const qSlider = document.createElement('input')
         qSlider.setAttribute('class', 'vertical-slider')
+        qSlider.setAttribute('orient', 'vertical')
         qSlider.setAttribute('type', 'range')
-        qSlider.setAttribute('min', '16.35')
-        qSlider.setAttribute('max', '3951.07')
-        qSlider.setAttribute('value', this.filter.frequency.value.toString())
+        qSlider.setAttribute('min', '0')
+        qSlider.setAttribute('max', '20')
+        qSlider.setAttribute('value', this.filter.Q.value.toString())
         qSlider.setAttribute('step', '1')
         qSlider.addEventListener('input', (event) => {
             if (event && event.target && event.target.value) {
                 this.setQ(event.target.value)
             }
         })
+        const qDiv = document.createElement('div')
+        qDiv.setAttribute('class', 'slider-container')
+        const qLabel = document.createElement('label')
+        qLabel.setAttribute('class', 'slider-label')
+        qLabel.innerText = 'Q'
+        qDiv.appendChild(qSlider)
+        qDiv.appendChild(qLabel)
         const gainSlider = document.createElement('input')
         gainSlider.setAttribute('class', 'vertical-slider')
+        gainSlider.setAttribute('orient', 'vertical')
         gainSlider.setAttribute('type', 'range')
-        gainSlider.setAttribute('min', '16.35')
-        gainSlider.setAttribute('max', '3951.07')
-        gainSlider.setAttribute('value', this.filter.frequency.value.toString())
+        gainSlider.setAttribute('min', '-10')
+        gainSlider.setAttribute('max', '10')
+        gainSlider.setAttribute('value', this.filter.gain.value.toString())
         gainSlider.setAttribute('step', '1')
         gainSlider.addEventListener('input', (event) => {
             if (event && event.target && event.target.value) {
                 this.setGain(event.target.value)
             }
         })
+        const gainDiv = document.createElement('div')
+        gainDiv.setAttribute('class', 'slider-container')
+        const gainLabel = document.createElement('label')
+        gainLabel.setAttribute('class', 'slider-label')
+        gainLabel.innerText = 'Gain'
+        gainDiv.appendChild(gainSlider)
+        gainDiv.appendChild(gainLabel)
         const dropDown = document.createElement('select')
+        dropDown.setAttribute('class', 'options-select')
         dropDown.addEventListener('change', event => {
             if (event && event.target && event.target.value) {
                 this.setType(event.target.value)
@@ -114,10 +138,10 @@ function FilterModule(ctx, type) {
             }
             dropDown.appendChild(option)
         })
-        filterInterface.appendChild(freqSlider)
-        filterInterface.appendChild(qSlider)
-        filterInterface.appendChild(gainSlider)
         filterInterface.appendChild(dropDown)
+        filterInterface.appendChild(freqDiv)
+        filterInterface.appendChild(qDiv)
+        filterInterface.appendChild(gainDiv)
         moduleInterface.appendChild(filterInterface)
         return moduleInterface
     }

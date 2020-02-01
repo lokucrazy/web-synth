@@ -4,6 +4,7 @@
   "description": "a web synthesizer built from the web audio api",
   "main": "synth.js",
   "scripts": {
+    "start": "http-server -c-1"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,7 @@
     "url": "https://github.com/lokucrazy/web-synth/issues"
   },
   "homepage": "https://github.com/lokucrazy/web-synth#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "http-server": "^0.12.1"
+  }
 }

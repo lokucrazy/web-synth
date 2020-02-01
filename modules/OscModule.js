@@ -56,12 +56,12 @@ function OscModule(ctx, amount, types) {
         const moduleHeader = document.createElement('h3')
         moduleHeader.innerText = 'Oscillator Module'
         moduleInterface.appendChild(moduleHeader)
-        moduleInterface.appendChild(document.createElement('br'))
         this.oscs.map((osc, index) => {
             const oscInterface = document.createElement('div')
             oscInterface.setAttribute('class','param-interface')
             const slider = document.createElement('input')
             slider.setAttribute('class', 'vertical-slider')
+            slider.setAttribute('orient', 'vertical')
             slider.setAttribute('type', 'range')
             slider.setAttribute('min', '16.35')
             slider.setAttribute('max', '3951.07')
@@ -73,6 +73,7 @@ function OscModule(ctx, amount, types) {
                 }
             })
             const dropDown = document.createElement('select')
+            dropDown.setAttribute('class', 'options-select')
             dropDown.addEventListener('change', (event) => {
                 if (event && event.target && event.target.value) {
                     this.setType(index, event.target.value)
@@ -87,8 +88,16 @@ function OscModule(ctx, amount, types) {
                 }
                 dropDown.appendChild(option)
             })
-            oscInterface.appendChild(slider)
+            const sliderDiv = document.createElement('div')
+            sliderDiv.setAttribute('class', 'slider-container')
+            const sliderLabel = document.createElement('label')
+            sliderLabel.setAttribute('class', 'slider-label')
+            sliderLabel.innerText = 'Freq'
+            sliderDiv.appendChild(slider)
+            sliderDiv.appendChild(sliderLabel)
+            
             oscInterface.appendChild(dropDown)
+            oscInterface.appendChild(sliderDiv)
             moduleInterface.appendChild(oscInterface)
         })
         return moduleInterface

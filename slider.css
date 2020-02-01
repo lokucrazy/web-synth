@@ -1,7 +1,6 @@
 div[id*="Module"] {
     border: 3px solid black;
     margin: 5px;
-    height: 14rem;
 }
 
 div[id*="Module"] h3 {
@@ -10,14 +9,30 @@ div[id*="Module"] h3 {
 }
 
 .param-interface {
+    display: inline-block;
+    position: relative;
     margin: 5px;
-    left: -23px;
+}
+
+.slider-container {
+    display: inline-block;
 }
 
 .vertical-slider {
-    position: absolute;
+    display: block;
+    width: 30px;
     height: 175px;
-    transform: rotate(270deg);
+    -webkit-appearance: slider-vertical;
+}
+
+.slider-label {
+    display: block;
+    text-align: center;
+}
+
+.options-select {
+    display: block;
+    margin-bottom: 10px;
 }
 
 button {
