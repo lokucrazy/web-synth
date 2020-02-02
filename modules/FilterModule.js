@@ -1,3 +1,5 @@
+import { createInterface, createModule } from "../interface/Interface.js";
+
 let filterNum = {
     val: 0,
     toString: function() {
@@ -54,94 +56,40 @@ function FilterModule(ctx, type) {
     }
 
     this.renderInterface = () => {
-        const moduleInterface = document.createElement('div')
-        moduleInterface.setAttribute('id', this.id)
-        moduleInterface.setAttribute('class', 'filter-module')
-        const moduleHeader = document.createElement('h3')
-        moduleHeader.innerText = 'Filter Module'
-        moduleInterface.appendChild(moduleHeader)
-        const filterInterface = document.createElement('div')
-        filterInterface.setAttribute('class','param-interface')
-        const freqSlider = document.createElement('input')
-        freqSlider.setAttribute('class', 'vertical-slider')
-        freqSlider.setAttribute('orient', 'vertical')
-        freqSlider.setAttribute('type', 'range')
-        freqSlider.setAttribute('min', '16.35')
-        freqSlider.setAttribute('max', '3951.07')
-        freqSlider.setAttribute('value', this.filter.frequency.value.toString())
-        freqSlider.setAttribute('step', '1')
-        freqSlider.addEventListener('input', (event) => {
-            if (event && event.target && event.target.value) {
-                this.setFrequency(event.target.value)
-            }
-        })
-        const freqDiv = document.createElement('div')
-        freqDiv.setAttribute('class', 'slider-container')
-        const freqLabel = document.createElement('label')
-        freqLabel.setAttribute('class', 'slider-label')
-        freqLabel.innerText = 'Freq'
-        freqDiv.appendChild(freqSlider)
-        freqDiv.appendChild(freqLabel)
-        const qSlider = document.createElement('input')
-        qSlider.setAttribute('class', 'vertical-slider')
-        qSlider.setAttribute('orient', 'vertical')
-        qSlider.setAttribute('type', 'range')
-        qSlider.setAttribute('min', '0')
-        qSlider.setAttribute('max', '20')
-        qSlider.setAttribute('value', this.filter.Q.value.toString())
-        qSlider.setAttribute('step', '1')
-        qSlider.addEventListener('input', (event) => {
-            if (event && event.target && event.target.value) {
-                this.setQ(event.target.value)
-            }
-        })
-        const qDiv = document.createElement('div')
-        qDiv.setAttribute('class', 'slider-container')
-        const qLabel = document.createElement('label')
-        qLabel.setAttribute('class', 'slider-label')
-        qLabel.innerText = 'Q'
-        qDiv.appendChild(qSlider)
-        qDiv.appendChild(qLabel)
-        const gainSlider = document.createElement('input')
-        gainSlider.setAttribute('class', 'vertical-slider')
-        gainSlider.setAttribute('orient', 'vertical')
-        gainSlider.setAttribute('type', 'range')
-        gainSlider.setAttribute('min', '-10')
-        gainSlider.setAttribute('max', '10')
-        gainSlider.setAttribute('value', this.filter.gain.value.toString())
-        gainSlider.setAttribute('step', '1')
-        gainSlider.addEventListener('input', (event) => {
-            if (event && event.target && event.target.value) {
-                this.setGain(event.target.value)
-            }
-        })
-        const gainDiv = document.createElement('div')
-        gainDiv.setAttribute('class', 'slider-container')
-        const gainLabel = document.createElement('label')
-        gainLabel.setAttribute('class', 'slider-label')
-        gainLabel.innerText = 'Gain'
-        gainDiv.appendChild(gainSlider)
-        gainDiv.appendChild(gainLabel)
-        const dropDown = document.createElement('select')
-        dropDown.setAttribute('class', 'options-select')
-        dropDown.addEventListener('change', event => {
-            if (event && event.target && event.target.value) {
-                this.setType(event.target.value)
-            }
-        })
-        this.defaultTypes.forEach((type) => {
-            const option = document.createElement('option')
-            option.setAttribute('value', type)
-            option.innerText = type
-            if (this.filter.type === type) {
-                option.setAttribute('selected', 'true')
-            }
-            dropDown.appendChild(option)
-        })
-        filterInterface.appendChild(dropDown)
-        filterInterface.appendChild(freqDiv)
-        filterInterface.appendChild(qDiv)
-        filterInterface.appendChild(gainDiv)
+        const moduleInterface = createModule(this.id, 'Filter Module')
+        const filterInterface = createInterface(
+            [
+                this.filter.type,
+                this.defaultTypes,
+                (value) => this.setType(value),
+            ],
+            [
+                [
+                    'Freq',
+                    '16.35',
+                    '3951.07',
+                    this.filter.frequency.value.toFixed(2).toString(),
+                    '1',
+                    (value) => this.setFrequency(value),
+                ],
+                [
+                    'Q',
+                    '0',
+                    '20',
+                    this.filter.Q.value.toFixed(2).toString(),
+                    '1',
+                    (value) => this.setQ(value),
+                ],
+                [
+                    'Gain',
+                    '-10',
+                    '10',
+                    this.filter.gain.value.toFixed(2).toString(),
+                    '1',
+                    (value) => this.setGain(value),
+                ],
+            ]
+        )
         moduleInterface.appendChild(filterInterface)
         return moduleInterface
     }

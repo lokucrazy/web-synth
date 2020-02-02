@@ -1,6 +1,8 @@
 div[id*="Module"] {
+    display: inline-table;
     border: 3px solid black;
     margin: 5px;
+    height: 267px;
 }
 
 div[id*="Module"] h3 {
@@ -16,13 +18,14 @@ div[id*="Module"] h3 {
 
 .slider-container {
     display: inline-block;
+    width: 90px
 }
 
 .vertical-slider {
     display: block;
-    width: 30px;
     height: 175px;
     -webkit-appearance: slider-vertical;
+    margin: auto;
 }
 
 .slider-label {
@@ -32,7 +35,8 @@ div[id*="Module"] h3 {
 
 .options-select {
     display: block;
-    margin-bottom: 10px;
+    height: 20px;
+    margin: auto auto 10px auto;
 }
 
 button {

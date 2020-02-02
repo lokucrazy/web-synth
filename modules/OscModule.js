@@ -1,3 +1,5 @@
+import { createInterface, createModule } from "../interface/Interface.js";
+
 let oscNum = {
     val: 0,
     toString: function() {
@@ -50,54 +52,25 @@ function OscModule(ctx, amount, types) {
     }
 
     this.renderInterface = () => {
-        const moduleInterface = document.createElement('div')
-        moduleInterface.setAttribute('id', this.id)
-        moduleInterface.setAttribute('class', 'osc-module')
-        const moduleHeader = document.createElement('h3')
-        moduleHeader.innerText = 'Oscillator Module'
-        moduleInterface.appendChild(moduleHeader)
+        const moduleInterface = createModule(this.id, 'Oscillator Module')
         this.oscs.map((osc, index) => {
-            const oscInterface = document.createElement('div')
-            oscInterface.setAttribute('class','param-interface')
-            const slider = document.createElement('input')
-            slider.setAttribute('class', 'vertical-slider')
-            slider.setAttribute('orient', 'vertical')
-            slider.setAttribute('type', 'range')
-            slider.setAttribute('min', '16.35')
-            slider.setAttribute('max', '3951.07')
-            slider.setAttribute('value', osc.frequency.value.toString())
-            slider.setAttribute('step', '1')
-            slider.addEventListener('input', (event) => {
-                if (event && event.target && event.target.value) {
-                    this.setFrequency(index, event.target.value)
-                }
-            })
-            const dropDown = document.createElement('select')
-            dropDown.setAttribute('class', 'options-select')
-            dropDown.addEventListener('change', (event) => {
-                if (event && event.target && event.target.value) {
-                    this.setType(index, event.target.value)
-                }
-            })
-            this.defaultTypes.forEach((type) => {
-                const option = document.createElement('option')
-                option.setAttribute('value', type)
-                option.innerText = type
-                if (osc.type === type) {
-                    option.setAttribute('selected', 'true')
-                }
-                dropDown.appendChild(option)
-            })
-            const sliderDiv = document.createElement('div')
-            sliderDiv.setAttribute('class', 'slider-container')
-            const sliderLabel = document.createElement('label')
-            sliderLabel.setAttribute('class', 'slider-label')
-            sliderLabel.innerText = 'Freq'
-            sliderDiv.appendChild(slider)
-            sliderDiv.appendChild(sliderLabel)
-            
-            oscInterface.appendChild(dropDown)
-            oscInterface.appendChild(sliderDiv)
+            const oscInterface = createInterface(
+                [
+                    osc.type,
+                    this.defaultTypes,
+                    (value) => this.setType(index, value)
+                ],
+                [
+                    [
+                        'Freq',
+                        '16.35',
+                        '3951.07',
+                        osc.frequency.value.toFixed(2).toString(),
+                        '1',
+                        (value) => this.setFrequency(index, value)
+                    ],
+                ]
+            )
             moduleInterface.appendChild(oscInterface)
         })
         return moduleInterface
