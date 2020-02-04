@@ -17,6 +17,7 @@ function OscModule(ctx, amount, types) {
     this.defaultTypes = ['sine', 'square', 'triangle']
     this.oscs = newOscillators(this.ctx, this.amount, this.types)
     this.frequencies = this.oscs.map(osc => osc.frequency.value)
+    this.modAmount = 0
 
 
     this.start = () => {
@@ -40,6 +41,10 @@ function OscModule(ctx, amount, types) {
             }
         }
     }
+
+    this.modInputs = this.oscs.map((osc) => {
+        return (value) => osc.frequency.value += (value)
+    })
 
     this.setFrequency = (osc, value) => {
         this.oscs[osc].frequency.value = value

@@ -70,6 +70,21 @@ export const createDropdown = (initial = '', options = [], onSelect = () => {}) 
     return div
 }
 
+export const createButton = (name = '', { onPress, onRelease, onClick }) => {
+    const button = document.createElement('button')
+    button.innerText = name
+    if (onPress && onRelease) {
+        console.log(onPress, onRelease)
+        button.addEventListener('mousedown', onPress)
+        button.addEventListener('mouseup', onRelease)
+        return button
+    } else if (onClick) {
+        button.addEventListener('click', onClick)
+        return button
+    }
+    return button
+}
+
 const updateLabel = (label = null, name = '', value = '') => {
     if (label) {
         label.innerText = `${name}: ${value}`
