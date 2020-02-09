@@ -1,48 +1,34 @@
-import { createModule, createInterface } from "../interface/Interface.js";
+import { createInterface, createModule } from '../interface/Interface.js';
 
-let ampNum = {
-    val: 0,
-    toString: function() {
-        return (() => 'AmpModule' + this.val++)()
-    }
-}
+import Module from './Protoypes/Module.js'
 
 function AmpModule(ctx) {
     if (!ctx) return
-    this.id = ampNum.toString()
-    this.ctx = ctx
-    this.amp = this.ctx.createGain()
+    Module.call(this, ctx, 'Amp Module', (context) => context.createGain())
+    console.log(this.node)
 
     this.setGain = (value) => {
-        this.amp.gain.setValueAtTime(value, this.ctx.currentTime)
+        this.node.gain.setValueAtTime(value, this.ctx.currentTime)
     }
+}
 
-    this.connect = () => {
-        return {
-            to: (dest) => {
-                this.amp.connect(dest)
-            }
-        }
-    }
+AmpModule.prototype = Object.create(Module.prototype)
 
-    this.renderInterface = () => {
-        const moduleInterface = createModule(this.id, 'Amp Module')
-        const ampInterface = createInterface(
-            undefined,
+AmpModule.prototype.renderInterface = function() {
+    const ampInterface = createInterface({
+        sliders: [
             [
-                [
-                    'Gain',
-                    '0',
-                    '1',
-                    this.amp.gain.value.toFixed(2).toString(),
-                    '0.01',
-                    (value) => this.setGain(value)
-                ]
+                'Gain',
+                '0',
+                '1',
+                this.node.gain.value.toFixed(2).toString(),
+                '0.01',
+                (value) => this.setGain(value)
             ]
-        )
-        moduleInterface.appendChild(ampInterface)
-        return moduleInterface
-    }
+        ],
+    })
+    this.module.appendChild(ampInterface)
+    return this.module
 }
 
 export default AmpModule

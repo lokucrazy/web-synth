@@ -7,7 +7,7 @@ export const createModule = (id = '', title= '') => {
     return module
 }
 
-export const createInterface = (dropDown = [], sliders = []) => {
+export const createInterface = ({ dropDown = [], sliders = [] } = {}) => {
     const paramInterface = document.createElement('div')
     paramInterface.setAttribute('class', 'param-interface')
     if (dropDown && dropDown.length !== 0) {
@@ -74,7 +74,6 @@ export const createButton = (name = '', { onPress, onRelease, onClick }) => {
     const button = document.createElement('button')
     button.innerText = name
     if (onPress && onRelease) {
-        console.log(onPress, onRelease)
         button.addEventListener('mousedown', onPress)
         button.addEventListener('mouseup', onRelease)
         return button

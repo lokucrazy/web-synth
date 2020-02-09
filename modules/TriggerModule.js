@@ -31,9 +31,8 @@ function TriggerModule() {
 
     this.renderInterface = () => {
         const moduleInterface = createModule(this.id, 'Trigger Module')
-        const triggerInterface = createInterface(
-            undefined,
-            [
+        const triggerInterface = createInterface({
+            sliders: [
                 [
                     'Mod',
                     '0',
@@ -44,7 +43,7 @@ function TriggerModule() {
 
                 ],
             ]
-        )
+        })
         const triggerButton = createButton('Trigger', {
             onPress: this.onPress,
             onRelease: this.onRelease,

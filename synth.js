@@ -1,6 +1,6 @@
+import AmpModule from "./modules/AmpModule.js";
 import FilterModule from "./modules/FilterModule.js";
 import OscModule from "./modules/OscModule.js";
-import AmpModule from "./modules/AmpModule.js";
 import TriggerModule from "./modules/TriggerModule.js";
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
@@ -13,8 +13,8 @@ ampModule.connect().to(audioCtx.destination)
 const triggerModule = new TriggerModule()
 triggerModule.connect().to(oscModule.modInputs[0])
 export function playOscModule() {
-    oscModule.connect(0).to(filterModule.filter)
-    filterModule.connect().to(ampModule.amp)
+    oscModule.connect(0).to(filterModule.node)
+    filterModule.connect().to(ampModule.node)
     oscModule.start()
 }
 

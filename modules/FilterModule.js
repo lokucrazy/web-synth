@@ -1,18 +1,12 @@
-import { createInterface, createModule } from "../interface/Interface.js";
+import { createInterface, createModule } from '../interface/Interface.js';
 
-let filterNum = {
-    val: 0,
-    toString: function() {
-        return (() => 'FilterModule' + this.val++)()
-    }
-}
+import Module from './Protoypes/Module.js'
 
 function FilterModule(ctx, type) {
     if (!ctx || !type) return
-    this.id = filterNum.toString()
-    this.ctx = ctx
+    Module.call(this, ctx, 'Filter Module', (context) => context.createBiquadFilter())
     this.type = type
-    this.filter = this.ctx.createBiquadFilter()
+    this.node = this.ctx.createBiquadFilter()
     this.defaultTypes = [
         'lowpass',
         'highpass',
@@ -23,76 +17,67 @@ function FilterModule(ctx, type) {
         'notch',
         'allpass',
     ]
-    this.filter.type = this.type
+    this.node.type = this.type
 
     this.setFrequency = (value) => {
         if (!value) return
-        this.filter.frequency.value = value
+        this.node.frequency.value = value
     }
 
     this.setQ = (value) => {
         if (!value) return
-        this.filter.Q.value = value
+        this.node.Q.value = value
     }
 
     this.setGain = (value) => {
         if (!value) return
-        this.filter.gain.value = value
+        this.node.gain.value = value
     }
 
     this.setType = (value) => {
         if (!value) return
-        this.filter.type = value
+        this.node.type = value
     }
+}
 
-    this.connect = () => {
-        return {
-            to: (dest) => {
-                if (dest) {
-                    this.filter.connect(dest)
-                }
-            }
-        }
-    }
+FilterModule.prototype = Object.create(Module.prototype)
 
-    this.renderInterface = () => {
-        const moduleInterface = createModule(this.id, 'Filter Module')
-        const filterInterface = createInterface(
+FilterModule.prototype.renderInterface = function() {
+    const filterInterface = createInterface({
+        dropDown: [
+            this.node.type,
+            this.defaultTypes,
+            (value) => this.setType(value),
+        ],
+        sliders: [
             [
-                this.filter.type,
-                this.defaultTypes,
-                (value) => this.setType(value),
+                'Freq',
+                '16.35',
+                '3951.07',
+                this.node.frequency.value.toFixed(2).toString(),
+                '1',
+                (value) => this.setFrequency(value),
             ],
             [
-                [
-                    'Freq',
-                    '16.35',
-                    '3951.07',
-                    this.filter.frequency.value.toFixed(2).toString(),
-                    '1',
-                    (value) => this.setFrequency(value),
-                ],
-                [
-                    'Q',
-                    '0',
-                    '20',
-                    this.filter.Q.value.toFixed(2).toString(),
-                    '1',
-                    (value) => this.setQ(value),
-                ],
-                [
-                    'Gain',
-                    '-10',
-                    '10',
-                    this.filter.gain.value.toFixed(2).toString(),
-                    '1',
-                    (value) => this.setGain(value),
-                ],
-            ]
-        )
-        moduleInterface.appendChild(filterInterface)
-        return moduleInterface
-    }
+                'Q',
+                '0',
+                '20',
+                this.node.Q.value.toFixed(2).toString(),
+                '1',
+                (value) => this.setQ(value),
+            ],
+            [
+                'Gain',
+                '-10',
+                '10',
+                this.node.gain.value.toFixed(2).toString(),
+                '1',
+                (value) => this.setGain(value),
+            ],
+        ],
+    })
+    this.module.appendChild(filterInterface)
+    return this.module
 }
 
 export default FilterModule
