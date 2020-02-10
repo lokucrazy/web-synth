@@ -1,14 +1,18 @@
-import { createInterface, createModule } from '../interface/Interface.js';
+import { createInterface } from '../interface/Interface.js';
 
 import Module from './Protoypes/Module.js'
 
 function AmpModule(ctx) {
     if (!ctx) return
     Module.call(this, ctx, 'Amp Module', (context) => context.createGain())
-    console.log(this.node)
+    this.node.gain.setValueAtTime(0.00, this.ctx.currentTime)
 
     this.setGain = (value) => {
         this.node.gain.setValueAtTime(value, this.ctx.currentTime)
+    }
+
+    this.modInputs = {
+        gainMod: (value) => this.node.gain.setValueAtTime(this.node.gain.value + value, this.ctx.currentTime),
     }
 }
 

@@ -1,4 +1,4 @@
-import { createInterface, createModule } from '../interface/Interface.js';
+import { createInterface } from '../interface/Interface.js';
 
 import Module from './Protoypes/Module.js'
 
@@ -28,9 +28,10 @@ function OscModule(ctx, amount, types) {
         this.renderInterface()
     }
 
-    this.modInputs = this.node.map((osc) => {
-        return (value) => osc.frequency.value += (value)
-    })
+    this.modInputs = this.node.reduce((mod, osc, index) => {
+        mod[`osc${index}`] = (value) => osc.frequency.setValueAtTime(osc.frequency.value + value, this.ctx.currentTime)
+        return mod
+    }, {})
 
     this.setFrequency = (osc, value) => {
         this.node[osc].frequency.value = value

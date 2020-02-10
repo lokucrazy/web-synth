@@ -1,4 +1,4 @@
-import { createInterface, createModule } from '../../interface/Interface.js'
+import { createModule } from '../../interface/Interface.js'
 
 import UID from './UID.js'
 
@@ -19,7 +19,9 @@ Module.prototype.connect = function(index) {
           if (this.node[index]) {
             this.node[index].connect(dest)
           }
-        } else {
+        } else if (typeof dest === 'function') {
+          typeof index === 'string' ? this.node[index] = dest : this.node = dest
+        } else if (this.node instanceof AudioNode && (dest instanceof AudioNode || dest instanceof  AudioParam)) {
           this.node.connect(dest)
         }
       }

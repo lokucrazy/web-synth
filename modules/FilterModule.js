@@ -1,4 +1,4 @@
-import { createInterface, createModule } from '../interface/Interface.js';
+import { createInterface } from '../interface/Interface.js';
 
 import Module from './Protoypes/Module.js'
 
@@ -37,6 +37,12 @@ function FilterModule(ctx, type) {
     this.setType = (value) => {
         if (!value) return
         this.node.type = value
+    }
+
+    this.modInputs = {
+        freqMod: (value) => this.node.frequency.setValueAtTime(this.node.frequency.value + value, this.ctx.currentTime),
+        qMod: (value) => this.node.Q.setValueAtTime(this.node.Q.value + value, this.ctx.currentTime),
+        gainMod: (value) => this.node.gain.setValueAtTime(this.node.gain.value + value, this.ctx.currentTime),
     }
 }
 
