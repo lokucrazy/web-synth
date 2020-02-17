@@ -7,11 +7,11 @@ export const createModule = (id = '', title= '') => {
     return module
 }
 
-export const createInterface = ({ dropDown = [], sliders = [] } = {}) => {
+export const createInterface = ({ dropdown = [], sliders = [], connections = [] } = {}) => {
     const paramInterface = document.createElement('div')
     paramInterface.setAttribute('class', 'param-interface')
-    if (dropDown && dropDown.length !== 0) {
-        paramInterface.appendChild(createDropdown(...dropDown))
+    if (dropdown && dropdown.length !== 0) {
+        paramInterface.appendChild(createDropdown(...dropdown))
     } else {
         const emptyOptions = document.createElement('div')
         emptyOptions.setAttribute('class', 'options-select')
@@ -19,6 +19,16 @@ export const createInterface = ({ dropDown = [], sliders = [] } = {}) => {
     }
     if (sliders && sliders.length !== 0) {
         sliders.forEach((slider = []) => paramInterface.appendChild(createSlider(...slider)))
+    }
+    if (connections.length) {
+        const jacks = document.createElement('div')
+        jacks.setAttribute('class', 'connections')
+        connections.forEach(out => {
+            const { tooltip, male } = out;
+            const circle = createConnection(tooltip, male)
+            jacks.appendChild(circle)
+        })
+        paramInterface.appendChild(jacks)
     }
     return paramInterface
 };
@@ -84,8 +94,44 @@ export const createButton = (name = '', { onPress, onRelease, onClick }) => {
     return button
 }
 
+export const createConnection = (tooltip = '', male = false) => {
+    const className = male ? 'connections-male' : 'connections-female'
+    const opposite = male ? 'connections-female' : 'connections-male'
+    const outerDiv = document.createElement('div')
+    const div = document.createElement('div')
+    outerDiv.setAttribute('class', 'connections-outer')
+    div.setAttribute('class', className)
+    div.setAttribute('title', tooltip)
+    div.setAttribute('draggable', 'true')
+    outerDiv.appendChild(div)
+
+    div.addEventListener('dragstart', (event) => {
+        fetchConnections(opposite).forEach(connector => {
+            connector.classList.add('connections-selectable')
+        })
+    })
+
+    div.addEventListener('dragend', (event) => {
+        console.log(fetchConnections(opposite))
+        fetchConnections(opposite).forEach(connector => {
+            connector.classList.remove('connections-selectable')
+        })
+    })
+
+    return outerDiv
+}
+
 const updateLabel = (label = null, name = '', value = '') => {
     if (label) {
         label.innerText = `${name}: ${value}`
     }
 }
+
+const fetchConnections = (opposite) => (
+    Array.from(document.querySelectorAll('[id*="Module"]'))
+        .map(dom => dom.shadowRoot)
+        .filter(Boolean)
+        .map(root => Array.from(root.querySelectorAll(`div[class^="${opposite}"]`)))
+        .filter(list => !!list.length)
+        .reduce((nodes, li) => [...nodes, ...li], [])
+)

@@ -1,44 +1,42 @@
 import { createButton, createInterface } from '../interface/Interface.js';
 
-import Module from './Protoypes/Module.js'
+import Module from './Prototypes/Module.js'
 
+class TriggerModule extends Module {
+    constructor() {
+        super(null, 'Trigger Module', () => null)
+        this.amount = 0
 
-function TriggerModule() {
-    Module.call(this, null, 'Trigger Module', () => null)
-    this.amount = 0
+        const triggerInterface = createInterface({
+            sliders: [
+                [
+                    'Mod',
+                    '0',
+                    '100',
+                    this.amount.toString(),
+                    '1',
+                    (value) => this.amount = Number(value),
+                ],
+            ],
+            connections: [
+                { tooltip: 'trigger output', male: true },
+            ],
+        })
+        const triggerButton = createButton('Trigger', {
+            onPress: this.onPress,
+            onRelease: this.onRelease,
+        })
+        triggerInterface.appendChild(triggerButton)
+        this.module.appendChild(triggerInterface)
+    }
 
-    this.onPress = () => {
+    onPress() {
         this.node.forEach(n => n(this.amount))
     }
 
-    this.onRelease = () => {
+    onRelease() {
         this.node.forEach(n => n(0 - this.amount))
     }
-}
-
-TriggerModule.prototype = Object.create(Module.prototype)
-
-TriggerModule.prototype.renderInterface = function() {
-    const triggerInterface = createInterface({
-        sliders: [
-            [
-                'Mod',
-                '0',
-                '100',
-                this.amount.toString(),
-                '1',
-                (value) => this.amount = Number(value),
-            ],
-        ]
-    })
-    const triggerButton = createButton('Trigger', {
-        onPress: this.onPress,
-        onRelease: this.onRelease,
-    })
-    triggerInterface.appendChild(triggerButton)
-    this.module.appendChild(triggerInterface)
-
-    return this.module;
 }
 
 export default TriggerModule

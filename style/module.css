@@ -43,3 +43,45 @@ button {
     position: relative;
     bottom: 0;
 }
+
+.connections > div:first-child   {
+    float: left !important;
+}
+
+.connections > div {
+    width: 33.3%;
+    float: right;
+}
+
+.connections-outer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.connections-female {
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.connections-female:hover {
+    border-color: red;
+}
+
+.connections-male {
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.connections-male:hover {
+    border-color: red;
+}
+
+.connections-selectable {
+    border-color: blue;
+}

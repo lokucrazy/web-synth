@@ -1,11 +1,17 @@
 import AmpModule from './modules/AmpModule.js';
 import FilterModule from './modules/FilterModule.js';
+import KeyboardModule from './modules/KeyboardModule.js';
 import OscModule from './modules/OscModule.js';
 import TriggerModule from './modules/TriggerModule.js';
-import KeyboardModule from './modules/KeyboardModule.js';
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioCtx = new AudioContext()
+
+customElements.define('osc-module', OscModule)
+customElements.define('filter-module', FilterModule)
+customElements.define('amp-module', AmpModule)
+customElements.define('trigger-module', TriggerModule)
+customElements.define('keyboard-module', KeyboardModule)
 
 const oscModule = new OscModule(audioCtx, 2, ['square'])
 const filterModule = new FilterModule(audioCtx, 'lowpass')
@@ -26,10 +32,10 @@ export function stopOscModule() {
     oscModule.stop(audioCtx.currentTime)
 }
 
-document.querySelector('#rack').appendChild(oscModule.renderInterface())
-document.querySelector('#rack').appendChild(filterModule.renderInterface())
-document.querySelector('#rack').appendChild(ampModule.renderInterface())
-document.querySelector('#rack').appendChild(triggerModule.renderInterface())
-document.querySelector('#rack').appendChild(keyboardModule.renderInterface())
+document.querySelector('#rack').appendChild(oscModule)
+document.querySelector('#rack').appendChild(filterModule)
+document.querySelector('#rack').appendChild(ampModule)
+document.querySelector('#rack').appendChild(triggerModule)
+document.querySelector('#rack').appendChild(keyboardModule)
 document.querySelector('#oscModuleButton').addEventListener('click', playOscModule)
 document.querySelector('#StopModule').addEventListener('click', stopOscModule)
