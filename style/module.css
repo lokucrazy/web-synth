@@ -1,87 +1,87 @@
 div[id*="Module"] {
-    display: inline-table;
-    border: 3px solid black;
-    margin: 5px;
-    height: 267px;
+  display: inline-table;
+  border: 3px solid black;
+  margin: 5px;
+  height: 267px;
 }
 
 div[id*="Module"] h3 {
-    margin: 0;
-    padding: 3px;
+  margin: 0;
+  padding: 3px;
 }
 
 .param-interface {
-    display: inline-block;
-    position: relative;
-    margin: 5px;
+  display: inline-block;
+  position: relative;
+  margin: 5px;
 }
 
 .slider-container {
-    display: inline-block;
-    width: 90px
+  display: inline-block;
+  width: 90px;
 }
 
 .vertical-slider {
-    display: block;
-    height: 175px;
-    -webkit-appearance: slider-vertical;
-    margin: auto;
+  display: block;
+  height: 175px;
+  -webkit-appearance: slider-vertical;
+  margin: auto;
 }
 
 .slider-label {
-    display: block;
-    text-align: center;
+  display: block;
+  text-align: center;
 }
 
 .options-select {
-    display: block;
-    height: 20px;
-    margin: auto auto 10px auto;
+  display: block;
+  height: 20px;
+  margin: auto auto 10px auto;
 }
 
 button {
-    position: relative;
-    bottom: 0;
+  position: relative;
+  bottom: 0;
 }
 
 .connections > div:first-child   {
-    float: left !important;
+  float: left !important;
 }
 
 .connections > div {
-    width: 33.3%;
-    float: right;
+  width: 33.3%;
+  float: right;
 }
 
 .connections-outer {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .connections-female {
-    margin: auto;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    border: 1px solid black;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 .connections-female:hover {
-    border-color: red;
+  border-color: red;
 }
 
 .connections-male {
-    margin: auto;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    border: 1px solid black;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 .connections-male:hover {
-    border-color: red;
+  border-color: red;
 }
 
 .connections-selectable {
-    border-color: blue;
+  border-color: blue;
 }

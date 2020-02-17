@@ -23,13 +23,13 @@ const keyboardModule = new KeyboardModule()
 keyboardModule.connect('pitch').to(oscModule.modInputs['osc0'])
 keyboardModule.connect('gate').to(ampModule.modInputs['gainMod'])
 export function playOscModule() {
-    oscModule.connect(0).to(filterModule.node)
-    filterModule.connect().to(ampModule.node)
-    oscModule.start()
+  oscModule.connect(0).to(filterModule.node)
+  filterModule.connect().to(ampModule.node)
+  oscModule.start()
 }
 
 export function stopOscModule() {
-    oscModule.stop(audioCtx.currentTime)
+  oscModule.stop(audioCtx.currentTime)
 }
 
 document.querySelector('#rack').appendChild(oscModule)

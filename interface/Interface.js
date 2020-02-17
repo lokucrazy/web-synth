@@ -105,13 +105,13 @@ export const createConnection = (tooltip = '', male = false) => {
     div.setAttribute('draggable', 'true')
     outerDiv.appendChild(div)
 
-    div.addEventListener('dragstart', (event) => {
+    div.addEventListener('dragstart', () => {
         fetchConnections(opposite).forEach(connector => {
             connector.classList.add('connections-selectable')
         })
     })
 
-    div.addEventListener('dragend', (event) => {
+    div.addEventListener('dragend', () => {
         console.log(fetchConnections(opposite))
         fetchConnections(opposite).forEach(connector => {
             connector.classList.remove('connections-selectable')
